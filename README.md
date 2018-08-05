@@ -3,7 +3,7 @@ SQS reader with simple router by type
 
 
 ### SQS Message Format 
-```json
+```js
 {
    "type": "your_types",
    "content": { /* your message */ }
