@@ -5,7 +5,7 @@ SQS reader with simple router by type
 ### SQS Message Format 
 ```js
 {
-   "type": "type1",
+   "type": "TYPE_1",
    "content": { /* your message */ }
 }
 ```
@@ -35,7 +35,7 @@ class myController extends BaseController {
     }
 
     get type() {
-        return 'TYPE1';
+        return 'TYPE_1';
     }
 
     async init() {
