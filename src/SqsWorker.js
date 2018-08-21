@@ -35,32 +35,38 @@ class SqsWorker extends EventEmitter {
         return this;
     }
 
+    get messageSchema() {
+        return Joi.object({
+            type   : Joi.any().valid(_.values([...this._controllers.keys()])).required(),
+            content: Joi.any().required()
+        }).required().unknown(false);
+    }
+
     start() {
         this._queue.start();
     }
 
     async _handleMessage(message) {
         try {
-            const jsonMessageBody  = JSON.parse(message);
-            const validationResult = this._validateMessage(jsonMessageBody);
-            if (validationResult.error) {
-                this.emit('error', new Error(`Invalid message, error: ${validationResult.error}, message: ${JSON.stringify(message)}`));
-                return;
-            }
+            const jsonMessage = JSON.parse(message);
+            if (!this._isValidMessage(jsonMessage, this.messageSchema)) return;
 
-            await this._controllers.get(jsonMessageBody.type).handleMessage(jsonMessageBody.content);
+            const controller = this._controllers.get(jsonMessage.type);
+            if (!this._isValidMessage(jsonMessage.content, controller.messageContentSchema)) return;
+            await controller.handleMessage(jsonMessage.content);
         } catch (error) {
             this.emit('error', error);
         }
     }
 
-    _validateMessage(message) {
-        const schema = Joi.object({
-            type   : Joi.any().valid(_.values([...this._controllers.keys()])).required(),
-            content: Joi.any().required()
-        }).required().unknown(false);
+    _isValidMessage(message, schema) {
+        const validationResult = Joi.validate(message, schema);
+        if (validationResult.error) {
+            this.emit('error', new Error(`Invalid message, error: ${validationResult.error}, message: ${JSON.stringify(message)}`));
+            return false;
+        }
 
-        return Joi.validate(message, schema);
+        return true;
     }
 }
 

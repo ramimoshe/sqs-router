@@ -75,6 +75,24 @@ test('start - 1 invalid message with existing controller - should not call TEST_
     worker.start();
 });
 
+test('start - 1 invalid message content with existing controller - should not call TEST_CONTROLLER1 handler', async (done) => {
+    const consumerStub    = new ConsumerMock();
+    const expectedMessage = {
+        type: 'TEST_CONTROLLER1',
+        content : {
+            zzz: 19
+        }
+    };
+    consumerStub.injectFakeResponseData([JSON.stringify(expectedMessage)]);
+    const worker = new Worker(`${__dirname}/mocks/controllers`, consumerStub);
+    worker.on('error', () => {
+        expect(worker._controllers.get('TEST_CONTROLLER1').handleMessage.mock.calls[0]).toEqual(undefined);
+        done();
+    });
+    await worker.init();
+    worker.start();
+});
+
 test('init - no existing controller registered - should throw error', async (done) => {
     const consumerStub    = new ConsumerMock();
     const expectedMessage = {

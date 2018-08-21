@@ -2,6 +2,7 @@
 
 'use strict';
 
+const Joi            = require('joi');
 const BaseController = require('../../../../../src/BaseController');
 
 
@@ -15,8 +16,18 @@ class TestController1 extends BaseController {
         return 'TEST_CONTROLLER1';
     }
 
+    get messageContentSchema() {
+        return Joi.object({
+            age: Joi.number().required()
+        }).required();
+    }
+
     async init() {
         return this;
+    }
+
+    async handleMessage() {
+        return true;
     }
 }
 

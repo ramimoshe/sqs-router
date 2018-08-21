@@ -2,6 +2,7 @@
 
 const _ = require('lodash/fp');
 
+
 class ConsumerStub {
     constructor() {
         this.injectedData = [];
@@ -22,8 +23,7 @@ class ConsumerStub {
 
 class ConsumerStubRunner {
     constructor(queueUrl, handler) {
-        this.queueUrl = queueUrl;
-        this.handler  = handler;
+        this.handler = handler;
     }
 
     injectFakeResponseData(arrayData) {

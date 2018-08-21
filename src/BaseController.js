@@ -8,7 +8,12 @@ class BaseController {
     }
 
     get type() {
-        throw new Error('BaseController#type - get type was not implemented');
+        throw new Error('BaseController - get type was not implemented');
+    }
+
+    // joi schema
+    get messageContentSchema() {
+        throw new Error('BaseController - messageContentSchame was not implemented');
     }
 
     async initDefaults() {
@@ -16,7 +21,7 @@ class BaseController {
     }
 
     async handleMessage(messageContent) {
-        throw new Error('BaseController#type - handleMessage was not implemented');
+        throw new Error('BaseController - handleMessage was not implemented');
     }
 }
 
