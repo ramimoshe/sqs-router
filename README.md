@@ -15,10 +15,10 @@ SQS reader with simple router by type
 
 ```js
   const sqsWorkerFactory = require('sqs-worker').workerFactory;
+
   const sqsWorker = new sqsWorkerFactory.create('/tmp/controllers', 'https://sqs.us-east-1.amazonaws.com/123123/my-queue', options);
   sqsWorker.on('error', console.error);
-  await sqsWorker.init();
-  sqsWorker.start();
+  (await sqsWorker.init()).start();
 ```
 ```
  |-- tmp
@@ -27,6 +27,7 @@ SQS reader with simple router by type
 ```
 myController.js
 ```js
+const Joi = require('joi');
 const BaseController = require('sqs-worker').BaseController;
 
 class myController extends BaseController {
@@ -36,6 +37,14 @@ class myController extends BaseController {
 
     get type() {
         return 'TYPE_1';
+    }
+    
+    get messageContentSchema() {
+        // Joi schema for message.content (https://github.com/hapijs/joi)
+        // schema example: 
+        return Joi.object({
+            age: Joi.number().required()
+        }).required();
     }
 
     async init() {
