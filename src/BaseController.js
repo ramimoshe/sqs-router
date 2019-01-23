@@ -13,7 +13,7 @@ class BaseController {
 
     // joi schema
     get messageContentSchema() {
-        throw new Error('BaseController - messageContentSchame was not implemented');
+        throw new Error('BaseController - messageContentSchema was not implemented');
     }
 
     async initDefaults() {
