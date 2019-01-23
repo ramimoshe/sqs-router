@@ -49,30 +49,24 @@ class SqsWorker extends EventEmitter {
     async _handleMessage(message) {
         try {
             const jsonMessage = JSON.parse(message);
-            if (!this._isValidMessage(jsonMessage, this.messageSchema).status) return;
+            if (this._validateMessage(jsonMessage, this.messageSchema).error) return;
 
-            const controller     = this._controllers.get(jsonMessage.type);
-            const isContentValid = this._isValidMessage(jsonMessage.content, controller.messageContentSchema);
-            if (!isContentValid.status) return;
-            await controller.handleMessage(isContentValid.value);
+            const controller              = this._controllers.get(jsonMessage.type);
+            const contentValidationResult = this._validateMessage(jsonMessage.content, controller.messageContentSchema);
+            if (contentValidationResult.error) return;
+            await controller.handleMessage(contentValidationResult.value);
         } catch (error) {
             this.emit('error', error);
         }
     }
 
-    _isValidMessage(message, schema) {
+    _validateMessage(message, schema) {
         const validationResult = Joi.validate(message, schema);
         if (validationResult.error) {
             this.emit('error', new Error(`Invalid message, error: ${validationResult.error}, message: ${JSON.stringify(message)}`));
-            return {
-                status: false
-            };
         }
 
-        return {
-            status: true,
-            value : validationResult.value
-        };
+        return validationResult;
     }
 }
 

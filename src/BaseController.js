@@ -2,6 +2,7 @@
 
 'use strict';
 
+const Joi = require('joi');
 
 class BaseController {
     constructor() {
@@ -13,7 +14,7 @@ class BaseController {
 
     // joi schema
     get messageContentSchema() {
-        throw new Error('BaseController - messageContentSchema was not implemented');
+        return Joi.any();
     }
 
     async initDefaults() {
