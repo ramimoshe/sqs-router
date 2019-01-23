@@ -15,5 +15,5 @@ module.exports = {
     workerFactory : {
         create: createWorker
     },
-    BaseController: require('./BaseController')
+    BaseController: require('./src/BaseController')
 };
