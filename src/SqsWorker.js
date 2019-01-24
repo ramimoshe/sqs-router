@@ -26,7 +26,7 @@ class SqsWorker extends EventEmitter {
             const controllerClass = require(`${this._controllersPath}/${controllerFilePath}`);
             if (controllerClass.__proto__.name !== 'BaseController') return;
 
-            const controller = await (new controllerClass()).init();
+            const controller = await (new controllerClass()).initDefaults();
             this._controllers.set(controller.type, controller);
         });
 
