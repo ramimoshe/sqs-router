@@ -51,7 +51,7 @@ class myController extends BaseController {
         }).required();
     }
 
-    async init() {
+    async initDefaults() {
         return this;
     }
     
