@@ -1,6 +1,6 @@
 {
   "name": "sqs-router",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "description": "",
   "main": "index.js",
   "directories": {
@@ -29,5 +29,8 @@
     "joi": "^13.5.2",
     "lodash": "^4.17.10",
     "sqs-consumer": "^3.8.0"
+  },
+  "devDependencies": {
+    "jest": "^22.1.2"
   }
 }
