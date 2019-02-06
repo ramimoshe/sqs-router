@@ -19,7 +19,7 @@
   "bugs": {
     "url": "https://github.com/ramimoshe/sqs-router/issues"
   },
-  engines": {
+  "engines": {
     "node": ">= 8"
   },
   "homepage": "https://github.com/ramimoshe/sqs-router#readme",
