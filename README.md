@@ -1,6 +1,10 @@
 # sqs-router
 SQS reader with simple router by type
 
+[![NPM version](https://img.shields.io/npm/v/sqs-router.svg?style=flat)](https://npmjs.org/package/sqs-router)
+[![NPM Downloads](https://img.shields.io/npm/dm/sqs-router.svg?style=flat)](https://npmjs.org/package/sqs-router)
+[![Node.js Version](https://img.shields.io/node/v/sqs-router.svg?style=flat)](http://nodejs.org/download/)
+
 
 ### SQS Message Format 
 ```js
