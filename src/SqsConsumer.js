@@ -16,11 +16,13 @@ class SqsConsumer extends EventEmitter {
         });
 
         this.batchSize = options.aws.batchSize || 10;
+        this.sqs       = options.sqs;
     }
 
     createConsumer(queueUrl, handler) {
         return Consumer.create({
             queueUrl     : queueUrl,
+            sqs          : this.sqs,
             handleMessage: async (message, done) => {
                 try {
                     await handler(message.Body);
