@@ -1,6 +1,6 @@
 {
   "name": "sqs-router",
-  "version": "0.0.9",
+  "version": "0.0.11",
   "description": "",
   "main": "index.js",
   "directories": {
@@ -27,7 +27,7 @@
     "aws-sdk": "^2.286.2",
     "bluebird": "^3.5.1",
     "joi": "^13.5.2",
-    "lodash": "^4.17.10",
+    "lodash": ">=4.17.11",
     "sqs-consumer": "^3.8.0"
   },
   "devDependencies": {
