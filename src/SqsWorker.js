@@ -8,6 +8,11 @@ const Promise      = require('bluebird');
 const Joi          = require('joi');
 
 
+const messageStatuses = {
+    processing: 'PROCESSING',
+    proceed   : 'PROCEED'
+};
+
 const readdirAsync = promisify(fs.readdir);
 
 class SqsWorker extends EventEmitter {
@@ -54,7 +59,10 @@ class SqsWorker extends EventEmitter {
             const controller              = this._controllers.get(jsonMessage.type);
             const contentValidationResult = this._validateMessage(jsonMessage.content, controller.messageContentSchema);
             if (contentValidationResult.error) return;
+
+            this.emit('message', { type: jsonMessage.type, status: messageStatuses.processing });
             await controller.handleMessage(contentValidationResult.value);
+            this.emit('message', { type: jsonMessage.type, status: messageStatuses.proceed });
         } catch (error) {
             this.emit('error', error);
         }
