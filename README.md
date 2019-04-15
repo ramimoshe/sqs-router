@@ -73,6 +73,10 @@ module.exports = myController;
       - secretAccessKey: (default from env AWS_SECRET_ACCESS_KEY)
     - batchSize: Size of batch (default 10)
 
+### Events
+- error: notify failures during the message processing
+- message: notify status of the message processing (PROCESSING, PROCEED)
+
 
 ### Run Tests
 ```bash
